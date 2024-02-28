@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>E:\Projects\QlyMonHoc\GitHub\lmms-feature-sprint04-dev\LMMS.API\bin\Release\net6.0\publish\</_PublishTargetUrl>
+    <History>True|2023-02-27T21:40:09.6813226Z;True|2023-02-28T04:14:42.5395218+07:00;True|2023-02-27T23:50:11.1156116+07:00;True|2023-02-27T21:33:32.1051957+07:00;True|2023-02-02T00:36:43.6325113+07:00;True|2023-01-31T15:17:23.9307583+07:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>server=localhost%3bport=3306%3buser=root%3bpassword=sa%40123%3bdatabase=lmms_new12282022%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

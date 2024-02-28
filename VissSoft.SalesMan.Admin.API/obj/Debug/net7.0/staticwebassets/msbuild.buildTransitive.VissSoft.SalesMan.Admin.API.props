@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\VissSoft.SalesMan.Admin.API.props" />
+</Project>

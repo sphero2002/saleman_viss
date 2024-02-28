@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "VissSoft.SalesMan.Admin.DataAccessLayer": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:55677;http://localhost:55678"
+    }
+  }
+}

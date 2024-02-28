@@ -1,0 +1,2 @@
+E:\Projects\DropsShip\dropship\dropsship_nextjs.fe\obj\Debug\dropsship_admin.fe.esproj.SuggestedBindingRedirects.cache
+E:\Projects\DropsShip\dropship\dropsship_nextjs.fe\obj\Debug\dropsship_admin.fe.esproj.CoreCompileInputs.cache

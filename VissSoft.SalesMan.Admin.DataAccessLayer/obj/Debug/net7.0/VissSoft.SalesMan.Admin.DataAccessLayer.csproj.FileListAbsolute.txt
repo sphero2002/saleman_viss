@@ -1,0 +1,14 @@
+C:\Users\locfa\OneDrive\Documents\1Project\visssoft_saleman_admi\VissSoft.SalesMan.Admin.DataAccessLayer\bin\Debug\net7.0\VissSoft.SalesMan.Admin.DataAccessLayer.deps.json
+C:\Users\locfa\OneDrive\Documents\1Project\visssoft_saleman_admi\VissSoft.SalesMan.Admin.DataAccessLayer\bin\Debug\net7.0\VissSoft.SalesMan.Admin.DataAccessLayer.runtimeconfig.json
+C:\Users\locfa\OneDrive\Documents\1Project\visssoft_saleman_admi\VissSoft.SalesMan.Admin.DataAccessLayer\bin\Debug\net7.0\VissSoft.SalesMan.Admin.DataAccessLayer.dll
+C:\Users\locfa\OneDrive\Documents\1Project\visssoft_saleman_admi\VissSoft.SalesMan.Admin.DataAccessLayer\bin\Debug\net7.0\VissSoft.SalesMan.Admin.DataAccessLayer.pdb
+C:\Users\locfa\OneDrive\Documents\1Project\visssoft_saleman_admi\VissSoft.SalesMan.Admin.DataAccessLayer\obj\Debug\net7.0\VissSoft.SalesMan.Admin.DataAccessLayer.csproj.AssemblyReference.cache
+C:\Users\locfa\OneDrive\Documents\1Project\visssoft_saleman_admi\VissSoft.SalesMan.Admin.DataAccessLayer\obj\Debug\net7.0\VissSoft.SalesMan.Admin.DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\locfa\OneDrive\Documents\1Project\visssoft_saleman_admi\VissSoft.SalesMan.Admin.DataAccessLayer\obj\Debug\net7.0\VissSoft.SalesMan.Admin.DataAccessLayer.AssemblyInfoInputs.cache
+C:\Users\locfa\OneDrive\Documents\1Project\visssoft_saleman_admi\VissSoft.SalesMan.Admin.DataAccessLayer\obj\Debug\net7.0\VissSoft.SalesMan.Admin.DataAccessLayer.AssemblyInfo.cs
+C:\Users\locfa\OneDrive\Documents\1Project\visssoft_saleman_admi\VissSoft.SalesMan.Admin.DataAccessLayer\obj\Debug\net7.0\VissSoft.SalesMan.Admin.DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\Users\locfa\OneDrive\Documents\1Project\visssoft_saleman_admi\VissSoft.SalesMan.Admin.DataAccessLayer\obj\Debug\net7.0\VissSoft.SalesMan.Admin.DataAccessLayer.dll
+C:\Users\locfa\OneDrive\Documents\1Project\visssoft_saleman_admi\VissSoft.SalesMan.Admin.DataAccessLayer\obj\Debug\net7.0\refint\VissSoft.SalesMan.Admin.DataAccessLayer.dll
+C:\Users\locfa\OneDrive\Documents\1Project\visssoft_saleman_admi\VissSoft.SalesMan.Admin.DataAccessLayer\obj\Debug\net7.0\VissSoft.SalesMan.Admin.DataAccessLayer.pdb
+C:\Users\locfa\OneDrive\Documents\1Project\visssoft_saleman_admi\VissSoft.SalesMan.Admin.DataAccessLayer\obj\Debug\net7.0\VissSoft.SalesMan.Admin.DataAccessLayer.genruntimeconfig.cache
+C:\Users\locfa\OneDrive\Documents\1Project\visssoft_saleman_admi\VissSoft.SalesMan.Admin.DataAccessLayer\obj\Debug\net7.0\ref\VissSoft.SalesMan.Admin.DataAccessLayer.dll

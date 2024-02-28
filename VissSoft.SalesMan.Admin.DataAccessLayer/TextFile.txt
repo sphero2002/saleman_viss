@@ -1,0 +1,13 @@
+﻿Command
+~~~~~~~
+Scaffold-DbContext "server=localhost;port=3306;user=root;password=sa@123;database=dropship" MySql.Data.EntityFrameworkCore -OutputDir DataObjects -f
+dotnet ef dbcontext scaffold -o DataObjects -f -d "Data Source=DESKTOP-KPJB5AS; Initial Catalog=lmms; User Id=sa; Password=123; Trusted_Connection=true;" "Microsoft.EntityFrameworkCore.SqlServer"
+dotnet ef dbcontext scaffold "server=localhost;port=3306;user=root;password=sa@123;database=quanlymonhoc" MySql.Data.EntityFrameworkCore -OutputDir DataObjects -f
+dotnet ef dbcontext scaffold "server=103.161.178.66;port=3306;user=visss_saleman;password=VisssAdmin@123;database=salemanager" MySql.Data.EntityFrameworkCore -OutputDir DataObjects -f
+dotnet ef dbcontext scaffold "server=localhost;port=3306;user=root;password=sa@123;database=dropship" MySql.EntityFrameworkCore -o DataObject2 -f
+
+Scaffold-DbContext "server=103.161.178.66;port=3306;user=visss_saleman;password=VisssAdmin@123;database=salemanager" MySql.EntityFrameworkCore -OutputDir DataObject -f
+
+Scaffold-DbContext "server=localhost;port=3306;user=root;password=mypass;database=sakila"
+     MySql.Data.EntityFrameworkCore -OutputDir Sakila
+     -Tables actor,film,film_actor
