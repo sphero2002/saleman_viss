@@ -63,5 +63,19 @@ namespace VissSoft.SalesMan.Admin.API.Controllers
             var product = await _productService.updateProductDetail(productDto);
             return Ok(product);
         }
+
+        [HttpPost("updateAttributeValueIntoGroup")]
+        public async Task<ActionResult<ServiceResponse<AttributeGroupValueDto>>> updateAttributeValueIntoGroup(UpdateAttrGrRequestDto updateAttrGrRequestDto)
+        {
+            var attribute = await _productService.updateAttributeValueIntoGroup(updateAttrGrRequestDto);
+            return Ok(attribute);
+        }
+
+        [HttpPost("updateProductAttributeGroup")]
+        public async Task<ActionResult<ServiceResponse<ProductDto>>> updateProductAttributeGroup(UpdateProductAttributeGroupRequest updateProductAttributeGroup)
+        {
+            var gr = await _productService.updateProductAttributeGroup(updateProductAttributeGroup);
+            return Ok(gr);
+        }
     }
 }

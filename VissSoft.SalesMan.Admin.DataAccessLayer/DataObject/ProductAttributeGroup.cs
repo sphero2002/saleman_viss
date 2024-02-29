@@ -11,6 +11,10 @@ public partial class ProductAttributeGroup
 
     public int GroupAttributeId { get; set; }
 
+    public int IsDeleted { get; set; }
+
+    public string? UpdateAt { get; set; }
+
     public virtual AttributeGroup GroupAttribute { get; set; } = null!;
 
     public virtual Product Product { get; set; } = null!;

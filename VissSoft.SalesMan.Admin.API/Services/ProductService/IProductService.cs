@@ -11,8 +11,11 @@ namespace VissSoft.SalesMan.Admin.API.Services.ProductService
         Task<ServiceResponse<AttributeResponseDto>> createAttribute(AttributeRequestDto attributeRequestDto);
         Task<ServiceResponse<ProductResponseDto>> createProduct(ProductRequestDto productRequestDto);
         Task<ServiceResponse<List<ProductDto>>> getProduct(int productId);
-
         Task<ServiceResponse<ProductDto>> updateProductDetail(ProductDto productDto);
+
+        Task<ServiceResponse<AttributeGroupValueDto>> updateAttributeValueIntoGroup(UpdateAttrGrRequestDto updateAttrGrRequestDto);
+
+        Task<ServiceResponse<ProductDto>> updateProductAttributeGroup(UpdateProductAttributeGroupRequest updateProductAttributeGroup);
 
     }
 }

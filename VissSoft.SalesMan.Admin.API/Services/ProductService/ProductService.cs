@@ -249,8 +249,25 @@ namespace VissSoft.SalesMan.Admin.API.Services.ProductService
             }
 
             //image
-            string imageUrl = await appTools.SaveImageAsync(productRequestDto.ImageFile, "product", "product/defaultImage.jpg");
-            string imageUri = appTools.CreateImageUrl(imageUrl);
+            //chưa có lưu vào db đâu nha????
+            foreach(IFormFile item in productRequestDto.ImageFile)
+            {
+                string imageUrl = await appTools.SaveImageAsync(item, "product", "product/defaultImage.jpg");
+                string imageUri = appTools.CreateImageUrl(imageUrl);
+
+                var NewImage = new Image
+                {
+                    ImageUrl = imageUri,
+                };
+                _dataContext.Images.Add(NewImage);
+
+                var newProductImage = new ProductImage
+                {
+                    Image = NewImage,
+                    Product = newProduct
+                };
+                _dataContext.ProductImages.Add(newProductImage);
+            }
 
             await _dataContext.SaveChangesAsync();
 
@@ -328,7 +345,6 @@ namespace VissSoft.SalesMan.Admin.API.Services.ProductService
                     }
                 }
             }
-
         }
 
         public async Task<ServiceResponse<ProductDto>> updateProductDetail(ProductDto productDto)
@@ -341,18 +357,145 @@ namespace VissSoft.SalesMan.Admin.API.Services.ProductService
             var existingProduct = await _dataContext.Products
                 .Where(c => c.Id == productDto.Id)
                 .FirstOrDefaultAsync();
-
+             
             if(existingProduct == null)
             {
                 serviceResponse.ErrorCode = 404;
                 serviceResponse.Status = false;
                 serviceResponse.Message = "Not existed product";
+                return serviceResponse;
             }
 
 
             //update product dựa vào các field trong productDto
             var updatedProduct = _mapper.Map(productDto, existingProduct);
             _dataContext.Products.Update(updatedProduct);
+
+            await _dataContext.SaveChangesAsync();
+
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<AttributeGroupValueDto>> updateAttributeValueIntoGroup(UpdateAttrGrRequestDto updateAttrGrRequestDto)
+        {
+            ServiceResponse<AttributeGroupValueDto> serviceResponse = new ServiceResponse<AttributeGroupValueDto>();
+            serviceResponse.ErrorCode = 200;
+            serviceResponse.Status = true;
+            serviceResponse.Message = "Successfully";
+
+            var attrGrExisting = _dataContext.AttributeGroups
+                .Include(c => c.ValuesOfAttributeGroups.Where(d => d.IsDeleted == 0))
+                .Where(c => c.Id == updateAttrGrRequestDto.groupId)
+                .ToList();
+
+            if(attrGrExisting.Count == 0)
+            {
+                serviceResponse.ErrorCode = 404;
+                serviceResponse.Status = false;
+                serviceResponse.Message = "Not existed this Attribute Group";
+                return serviceResponse;
+            }
+
+            //check list<attribute Value> xem có tồn tại trong bảng attributeValue không?
+            //list attributevalue lấy ở UpdateAttrGrRequestDto
+            foreach( var attributeValueId in updateAttrGrRequestDto.attrId ) 
+            {
+                var attrValue = await _dataContext.AttributeValues
+                .Where(c => c.Id == attributeValueId )
+                .FirstOrDefaultAsync();
+
+                //chỉ cần 1 cái attr Id không hợp lệ trả về lỗi
+                if(attrValue == null)
+                {
+                    serviceResponse.ErrorCode = 404;
+                    serviceResponse.Status = false;
+                    serviceResponse.Message = "Not existed this Attribute Value";
+                }
+            }
+
+            //update bảng AttributeGroups theo updateAttrGrRequestDto
+
+            //check xem đã tồn tại attrvalueId ở bảng AttributeGroups chưa
+            //tồn tại rồi thì bỏ qua không thêm
+            //chưa tồn tại thì thêm mới
+            //xóa mấy cái còn lại "isdeleted = 1"
+
+            var attriValueIdExistingInGr = attrGrExisting.First().ValuesOfAttributeGroups.ToList();
+            //list đầu vào laf updateAttrGrRequestDto.attrId
+
+
+            List<int> commonValueIdElements = attriValueIdExistingInGr.Select(c => c.ValueId).ToList().Intersect(updateAttrGrRequestDto.attrId).ToList(); //ko cần tạo mới
+
+            List<int> ValueIdDelete = attriValueIdExistingInGr.Select(c => c.ValueId).ToList()
+                .Except(updateAttrGrRequestDto.attrId).ToList(); // xóa isdeleted = 1
+            foreach (int valueIdDelete in ValueIdDelete)
+            {
+                var aa = attriValueIdExistingInGr.Where(c => c.ValueId == valueIdDelete).FirstOrDefault();
+                aa.UpdateAt = DateTime.Now.ToString();
+                aa.IsDeleted = 1;
+                _dataContext.ValuesOfAttributeGroups.Update(aa);
+            }
+
+            List<int> ValueIdInsert = updateAttrGrRequestDto.attrId
+                .Except(attriValueIdExistingInGr.Select(c => c.ValueId).ToList()).ToList(); // add mới
+            foreach(int valueIdInsert in ValueIdInsert)
+            {
+                var newValuesOfAttributeGroups = new ValuesOfAttributeGroup
+                {
+                    GroupAttributeId = updateAttrGrRequestDto.groupId,
+                    ValueId = valueIdInsert
+                };
+                _dataContext.ValuesOfAttributeGroups.Add(newValuesOfAttributeGroups);
+            }
+
+            await _dataContext.SaveChangesAsync();
+
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<ProductDto>> updateProductAttributeGroup(UpdateProductAttributeGroupRequest updateProductAttributeGroup)
+        {
+            ServiceResponse<ProductDto> serviceResponse = new ServiceResponse<ProductDto>();
+            serviceResponse.ErrorCode = 200;
+            serviceResponse.Status = true;
+            serviceResponse.Message = "Successfully";
+
+            var productGrExisting = _dataContext.Products
+                .Include(c => c.ProductAttributeGroups.Where(d => d.IsDeleted == 0))
+                .Where(c => c.Id == updateProductAttributeGroup.ProductId)
+                .ToList();
+
+            if (productGrExisting.Count == 0)
+            {
+                serviceResponse.ErrorCode = 404;
+                serviceResponse.Status = false;
+                serviceResponse.Message = "Not existed this Product";
+                return serviceResponse;
+            }
+
+            var attriGrIdExistingInGr = productGrExisting.First().ProductAttributeGroups.ToList();
+
+            List<int> GroupIdDelete = attriGrIdExistingInGr.Select(c => c.GroupAttributeId).ToList()
+                .Except(updateProductAttributeGroup.AttributeGroupId).ToList(); // xóa isdeleted = 1
+            foreach (int valueIdDelete in GroupIdDelete)
+            {
+                var aa = attriGrIdExistingInGr.Where(c => c.GroupAttributeId == valueIdDelete).FirstOrDefault();
+                aa.UpdateAt = DateTime.Now.ToString();
+                aa.IsDeleted = 1;
+                _dataContext.ProductAttributeGroups.Update(aa);
+            }
+
+            List<int> GroupIdInsert = updateProductAttributeGroup.AttributeGroupId
+                .Except(attriGrIdExistingInGr.Select(c => c.GroupAttributeId).ToList()).ToList(); // add mới
+            foreach (int groupIdInsert in GroupIdInsert)
+            {
+                var newGroups = new ProductAttributeGroup
+                {
+                    GroupAttributeId = groupIdInsert,
+                    ProductId = updateProductAttributeGroup.ProductId
+                };
+                _dataContext.ProductAttributeGroups.Add(newGroups);
+            }
 
             await _dataContext.SaveChangesAsync();
 

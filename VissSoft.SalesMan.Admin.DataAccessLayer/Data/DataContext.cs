@@ -1160,7 +1160,11 @@ namespace VissSoft.SalesMan.Admin.DataAccessLayer.Data
 
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.GroupAttributeId).HasColumnName("groupAttributeId");
+                entity.Property(e => e.IsDeleted).HasColumnName("isDeleted");
                 entity.Property(e => e.ProductId).HasColumnName("productId");
+                entity.Property(e => e.UpdateAt)
+                    .HasMaxLength(45)
+                    .HasColumnName("update_at");
 
                 entity.HasOne(d => d.GroupAttribute).WithMany(p => p.ProductAttributeGroups)
                     .HasForeignKey(d => d.GroupAttributeId)
@@ -1974,6 +1978,10 @@ namespace VissSoft.SalesMan.Admin.DataAccessLayer.Data
 
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.GroupAttributeId).HasColumnName("groupAttributeId");
+                entity.Property(e => e.IsDeleted).HasColumnName("isDeleted");
+                entity.Property(e => e.UpdateAt)
+                    .HasMaxLength(45)
+                    .HasColumnName("update_at");
                 entity.Property(e => e.ValueId).HasColumnName("valueId");
 
                 entity.HasOne(d => d.GroupAttribute).WithMany(p => p.ValuesOfAttributeGroups)
