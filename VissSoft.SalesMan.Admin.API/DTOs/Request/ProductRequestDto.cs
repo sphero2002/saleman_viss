@@ -23,7 +23,7 @@
 
         public string Label { get; set; } = null!;
 
-        public List<IFormFile> ImageFile { get; set; } = new List<IFormFile>();
+        public List<int> ImageId { get; set; } = null;
 
         public List<int> listCategporyValueId { get; set; }
 

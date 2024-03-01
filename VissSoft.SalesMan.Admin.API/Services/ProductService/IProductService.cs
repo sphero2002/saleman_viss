@@ -17,5 +17,9 @@ namespace VissSoft.SalesMan.Admin.API.Services.ProductService
 
         Task<ServiceResponse<ProductDto>> updateProductAttributeGroup(UpdateProductAttributeGroupRequest updateProductAttributeGroup);
 
+        Task<ServiceResponse<ProductDto>> deleteProduct(int productId); // sau check tat ca phai check qua product
+
+        Task<ServiceResponse<AttributeGroupValueDto>> deactiveAttributeGroup(int attributeGroupId);
+
     }
 }

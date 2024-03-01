@@ -212,6 +212,12 @@ namespace VissSoft.SalesMan.Admin.API.Services.ProductService
                 //create attributeGr
                 var newAttributeGroup = new AttributeGroup { Name = attributeGroup.Name, Sku = attributeGroup.Sku };
                 _dataContext.AttributeGroups.Add(newAttributeGroup);
+
+                foreach(int imageId in attributeGroup.imageId) 
+                {
+                    var newImageAttributeGroup = new AttributeGroupImage { AttributeGroup = newAttributeGroup, ImageId = imageId };
+                    _dataContext.AttributeGroupImages.Add(newImageAttributeGroup);
+                };
                 //
                 var newProductAtributeGroup = new ProductAttributeGroup { GroupAttribute = newAttributeGroup, Product = newProduct };
                 _dataContext.ProductAttributeGroups.Add(newProductAtributeGroup);
@@ -250,20 +256,11 @@ namespace VissSoft.SalesMan.Admin.API.Services.ProductService
 
             //image
             //chưa có lưu vào db đâu nha????
-            foreach(IFormFile item in productRequestDto.ImageFile)
+            foreach(int item in productRequestDto.ImageId)
             {
-                string imageUrl = await appTools.SaveImageAsync(item, "product", "product/defaultImage.jpg");
-                string imageUri = appTools.CreateImageUrl(imageUrl);
-
-                var NewImage = new Image
-                {
-                    ImageUrl = imageUri,
-                };
-                _dataContext.Images.Add(NewImage);
-
                 var newProductImage = new ProductImage
                 {
-                    Image = NewImage,
+                    ImageId = item,
                     Product = newProduct
                 };
                 _dataContext.ProductImages.Add(newProductImage);
@@ -497,6 +494,52 @@ namespace VissSoft.SalesMan.Admin.API.Services.ProductService
                 _dataContext.ProductAttributeGroups.Add(newGroups);
             }
 
+            await _dataContext.SaveChangesAsync();
+
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<ProductDto>> deleteProduct(int productId)
+        {
+            //delete product là xóa hết tất cả những cái liên quan đến product kiểu attributeGr
+            ServiceResponse<ProductDto> serviceResponse = new ServiceResponse<ProductDto>();
+            serviceResponse.ErrorCode = 200;
+            serviceResponse.Status = true;
+            serviceResponse.Message = "Successfully";
+
+
+
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<AttributeGroupValueDto>> deactiveAttributeGroup(int attributeGroupId)
+        {
+            ServiceResponse<AttributeGroupValueDto> serviceResponse = new ServiceResponse<AttributeGroupValueDto>();
+            serviceResponse.ErrorCode = 200;
+            serviceResponse.Status = true;
+            serviceResponse.Message = "Successfully";
+
+            var attributeGroupExisting = await _dataContext.AttributeGroups
+                .Where(c => c.Id == attributeGroupId)
+                .FirstOrDefaultAsync();
+
+            if (attributeGroupExisting == null)
+            {
+                serviceResponse.ErrorCode = 404;
+                serviceResponse.Status = false;
+                serviceResponse.Message = "Not existed product";
+                return serviceResponse;
+            }
+
+            if(attributeGroupExisting.IsDeleted == 1)
+            {
+                serviceResponse.ErrorCode = 404;
+                serviceResponse.Status = false;
+                serviceResponse.Message = "Deleted product";
+                return serviceResponse;
+            }
+
+            attributeGroupExisting.IsDeleted = 1;
             await _dataContext.SaveChangesAsync();
 
             return serviceResponse;

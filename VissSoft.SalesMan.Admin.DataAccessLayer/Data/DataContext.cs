@@ -37,6 +37,8 @@ namespace VissSoft.SalesMan.Admin.DataAccessLayer.Data
 
         public virtual DbSet<AttributeGroupImage> AttributeGroupImages { get; set; }
 
+        public virtual DbSet<AttributeGroupVideo> AttributeGroupVideos { get; set; }
+
         public virtual DbSet<AttributeValue> AttributeValues { get; set; }
 
         public virtual DbSet<AttributesType> AttributesTypes { get; set; }
@@ -119,6 +121,8 @@ namespace VissSoft.SalesMan.Admin.DataAccessLayer.Data
 
         public virtual DbSet<ProductPromotion> ProductPromotions { get; set; }
 
+        public virtual DbSet<ProductVideo> ProductVideos { get; set; }
+
         public virtual DbSet<Promotion> Promotions { get; set; }
 
         public virtual DbSet<PromotionType> PromotionTypes { get; set; }
@@ -176,6 +180,8 @@ namespace VissSoft.SalesMan.Admin.DataAccessLayer.Data
         public virtual DbSet<ValuesOfAttributeGroup> ValuesOfAttributeGroups { get; set; }
 
         public virtual DbSet<Variant> Variants { get; set; }
+
+        public virtual DbSet<Video> Videos { get; set; }
 
         public virtual DbSet<Warehouse> Warehouses { get; set; }
 
@@ -253,6 +259,31 @@ namespace VissSoft.SalesMan.Admin.DataAccessLayer.Data
                     .HasForeignKey(d => d.ImageId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("agi_2");
+            });
+
+            modelBuilder.Entity<AttributeGroupVideo>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+                entity.ToTable("attribute_group_video");
+
+                entity.HasIndex(e => e.AttributeGroupId, "agv_1_idx");
+
+                entity.HasIndex(e => e.VideoId, "agv_2_idx");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.AttributeGroupId).HasColumnName("attributeGroupId");
+                entity.Property(e => e.VideoId).HasColumnName("videoId");
+
+                entity.HasOne(d => d.AttributeGroup).WithMany(p => p.AttributeGroupVideos)
+                    .HasForeignKey(d => d.AttributeGroupId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("agv_1");
+
+                entity.HasOne(d => d.Video).WithMany(p => p.AttributeGroupVideos)
+                    .HasForeignKey(d => d.VideoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("agv_2");
             });
 
             modelBuilder.Entity<AttributeValue>(entity =>
@@ -1277,6 +1308,31 @@ namespace VissSoft.SalesMan.Admin.DataAccessLayer.Data
                     .HasConstraintName("pp_2");
             });
 
+            modelBuilder.Entity<ProductVideo>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+                entity.ToTable("product_video");
+
+                entity.HasIndex(e => e.ProductId, "pv_1_idx");
+
+                entity.HasIndex(e => e.VideoId, "pv_2_idx");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.ProductId).HasColumnName("productId");
+                entity.Property(e => e.VideoId).HasColumnName("videoId");
+
+                entity.HasOne(d => d.Product).WithMany(p => p.ProductVideos)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("pv_1");
+
+                entity.HasOne(d => d.Video).WithMany(p => p.ProductVideos)
+                    .HasForeignKey(d => d.VideoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("pv_2");
+            });
+
             modelBuilder.Entity<Promotion>(entity =>
             {
                 entity.HasKey(e => e.Id).HasName("PRIMARY");
@@ -2140,6 +2196,18 @@ namespace VissSoft.SalesMan.Admin.DataAccessLayer.Data
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("va1");
+            });
+
+            modelBuilder.Entity<Video>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+                entity.ToTable("video");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.VideoUrl)
+                    .HasMaxLength(45)
+                    .HasColumnName("videoUrl");
             });
 
             modelBuilder.Entity<Warehouse>(entity =>

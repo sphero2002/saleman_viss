@@ -44,7 +44,7 @@ namespace VissSoft.SalesMan.Admin.API.Controllers
         }
 
         [HttpPost("createProduct")]
-        public async Task<ActionResult<ServiceResponse<ProductResponseDto>>> createProduct([FromForm] ProductRequestDto productRequestDto)
+        public async Task<ActionResult<ServiceResponse<ProductResponseDto>>> createProduct(ProductRequestDto productRequestDto)
         {
             var product = await _productService.createProduct(productRequestDto);
             return Ok(product);
@@ -75,6 +75,20 @@ namespace VissSoft.SalesMan.Admin.API.Controllers
         public async Task<ActionResult<ServiceResponse<ProductDto>>> updateProductAttributeGroup(UpdateProductAttributeGroupRequest updateProductAttributeGroup)
         {
             var gr = await _productService.updateProductAttributeGroup(updateProductAttributeGroup);
+            return Ok(gr);
+        }
+
+        [HttpDelete("deactiveAttributeGroup")]
+        public async Task<ActionResult<ServiceResponse<AttributeGroupValueDto>>> deactiveAttributeGroup(int attributeGroupId)
+        {
+            var gr = await _productService.deactiveAttributeGroup(attributeGroupId);
+            return Ok(gr);
+        }
+
+        [HttpDelete("deleteProduct")]
+        public async Task<ActionResult<ServiceResponse<ProductDto>>> deleteProduct(int productId)
+        {
+            var gr = await _productService.deleteProduct(productId);
             return Ok(gr);
         }
     }

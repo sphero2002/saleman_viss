@@ -4,7 +4,9 @@
     {
         public string Name { get; set; } 
 
-        public string Sku { get; set; } 
+        public string Sku { get; set; }
+
+        public List<int> imageId { get; set; }
 
         public List<int> listAttributeValueId { get; set; }
 

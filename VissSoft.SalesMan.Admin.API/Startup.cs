@@ -27,6 +27,7 @@ using VissSoft.SalesMan.Admin.DataAccessLayer.DataObject;
 using VissSoft.SalesMan.Admin.DataAccessLayer.Data;
 using VissSoft.SalesMan.Admin.API.Services.ProductService;
 using VissSoft.SalesMan.Admin.API.Utility.AppTools;
+using VissSoft.SalesMan.Admin.API.Services.MediaService;
 
 namespace VissSoft.SalesMan.Admin.API
 {
@@ -59,6 +60,7 @@ namespace VissSoft.SalesMan.Admin.API
             //services.AddScoped<IPermissionService, PermissionServiceImpl>(); 
             //services.AddScoped<IMenuService, MenuServiceImpl>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IMediaService, MediaService>();
             services.AddAutoMapper(typeof(Program).Assembly);
             services.AddScoped<IJwtTokenProvider, JwtTokenProvider>();
             services.AddScoped<IAppTools, AppTools>();

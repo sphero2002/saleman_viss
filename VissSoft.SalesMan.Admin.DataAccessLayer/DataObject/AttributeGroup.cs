@@ -15,6 +15,8 @@ public partial class AttributeGroup
 
     public virtual ICollection<AttributeGroupImage> AttributeGroupImages { get; set; } = new List<AttributeGroupImage>();
 
+    public virtual ICollection<AttributeGroupVideo> AttributeGroupVideos { get; set; } = new List<AttributeGroupVideo>();
+
     public virtual ICollection<DeliveryProduct> DeliveryProducts { get; set; } = new List<DeliveryProduct>();
 
     public virtual ICollection<OrderProduct> OrderProducts { get; set; } = new List<OrderProduct>();
